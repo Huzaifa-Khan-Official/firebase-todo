@@ -40,33 +40,33 @@ const usernameDiv = document.querySelector('#uptName');
 // get useremailDiv
 const useremailDiv = document.querySelector('#uptEmail');
 
-// onAuthStateChanged(auth, async (user) => {
-//     if (user) {
-//         // give reference of the User
-//         usersRef = doc(db, "users", user.uid);
-//         // get the details of the user
-//         const userSnap = await getDoc(usersRef);
-//         // get user all data
-//         const usersData = userSnap.data()
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        // give reference of the User
+        usersRef = doc(db, "users", user.uid);
+        // get the details of the user
+        const userSnap = await getDoc(usersRef);
+        // get user all data
+        const usersData = userSnap.data()
 
-//         usersName = usersData.sname; // get the user name
-//         usersEmail = usersData.semail; // get the user name 
+        // usersName = usersData.sname; // get the user name
+        // usersEmail = usersData.semail; // get the user name 
 
-//         usernameDiv.value = usersName
-//         useremailDiv.value = usersEmail
-//     } else {
-//         localStorage.removeItem("userUid")
-//         location.href = "../signup/signup.html";
-//     }
-// });
+        // usernameDiv.value = usersName
+        // useremailDiv.value = usersEmail
+    } else {
+        localStorage.removeItem("userUid")
+        location.href = "../signup/signup.html";
+    }
+});
 
-// const logout = document.querySelector("#logout");
+const logout = document.querySelector("#logout");
 
-// logout.addEventListener("click", () => {
-//     auth.signOut().then(() => {
-//         location.href = "../signup/signup.html";
-//     })
-// })
+logout.addEventListener("click", () => {
+    auth.signOut().then(() => {
+        location.href = "../signup/signup.html";
+    })
+})
 
 
 // get updBtn

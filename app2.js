@@ -31,18 +31,24 @@ const userUid = localStorage.getItem("userUid");
 const ids = [];
 
 
+
 const getTodos = () => {
     onSnapshot(collection(db, userUid), (data) => {
         data.docChanges().forEach((todo) => {
-            ids.push(todo.doc.id)
-            delAll.style.display = "none";
+            console.log(data.size);
+            if (data.size) {
+                delAll.style.display = "block";
+            } else {
+                delAll.style.display = "none";
+            }
             if (todo.type === "removed") {
                 let dtodo = document.getElementById(todo.doc.id);
                 if (dtodo) {
                     dtodo.remove();
                 }
             } else if (todo.type === "added") {
-                delAll.style.display = "block";
+                ids.push(todo.doc.id)
+                // delAll.style.display = "block";
                 todoList.innerHTML += `
                 <li class="todo-item" id="${todo.doc.id}">
                     <div class="listStyle">
@@ -93,30 +99,25 @@ inputLi.addEventListener("keypress", (e) => {
 delAll.addEventListener("click", async () => {
     getul.innerHTML = "";
     delAll.style.display = "none";
-    let arr = []
     for (var i = 0; i < ids.length; i++) {
-        arr.push(await deleteDoc(doc(db, userUid, ids[i])));
+        await deleteDoc(doc(db, userUid, ids[i]));
     }
 })
 
+let deletedTodos = [];
 async function delLi(id) {
-    let alldata = []
-    await onSnapshot(collection(db, userUid), (data) => {
-        data.docChanges().forEach((todo) => {
-            alldata.push(todo)
-        })
-    });
-
-    console.log(alldata);
-    if(!alldata){
-        delAll.style.display = "none";
-        console.log("if chala");
-    } else {
-        delAll.style.display = "block";
-        console.log("else chala");
-    }
-    
     await deleteDoc(doc(db, userUid, id));
+
+    // onSnapshot(collection(db, userUid), (data) => {
+    //     data.docChanges().forEach((todo) => {
+    //         deletedTodos.push(todo.doc.id)
+    //         if (deletedTodos) {
+    //             delAll.style.display = "block";
+    //         } else {
+    //             delAll.style.display = "none";
+    //         }
+    //     })
+    // });
 }
 
 

@@ -77,8 +77,12 @@ nav {
     width: 100%;
 }
 
-.navbar>.container-fluid {
-    flex-wrap: nowrap;
+.navHead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: row-reverse;
 }
 
 .nav-heading {
@@ -202,6 +206,10 @@ nav button {
     background-color: #e51c1c;
 }
 
+#logout:hover {
+    cursor: pointer;
+}
+
 @media (max-width: 500px) {
     .todoList {
         padding: 0 25px;
@@ -218,5 +226,15 @@ nav button {
 @media (max-width: 367px) {
     .todoList {
         padding: 0 15px;
+    }
+}
+
+@media (max-width: 290px) {
+    .navHead {
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+    .nav-heading {
+        justify-content: start;
     }
 }
