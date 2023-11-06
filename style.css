@@ -1,0 +1,222 @@
+/* body {
+    padding: 0 20px;
+}
+.container {
+    margin: 20px auto;
+    border: .5px solid grey;
+    padding: 20px 0;
+}
+
+.accountTitle {
+    padding: 20px 0;
+    border-bottom: .3px solid grey;
+}
+
+.accountTitle {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nameDiv, .emailDiv, .btnsDiv, #errorPara {
+    margin: 20px;
+}
+
+.emailDiv {
+    border-bottom: .5px solid grey;
+}
+
+.updBtn button {
+    background-color: #0171d3 !important;
+}
+
+#errorPara {
+    color: red;
+}
+
+#successPara {
+    color: green;
+}
+
+.btnsDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 380px) {
+    .accountTitle {
+        flex-direction: column;
+    }
+} */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 5px 10px;
+    background-color: #E3E9FF;
+}
+
+.containerDiv {
+    margin: 100px auto 50px;
+    width: 90%;
+    max-width: 600px;
+}
+
+nav {
+    width: 600px;
+}
+
+.navbar {
+    background-color: #AF7EEB !important;
+    color: #FFFDFF !important;
+    width: 100%;
+}
+
+.navbar>.container-fluid {
+    flex-wrap: nowrap;
+}
+
+.nav-heading {
+    width: 510px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav button {
+    width: 57px;
+    color: #F2E9FB !important;
+}
+
+.card {
+    margin-top: 35px;
+    min-height: 100px;
+}
+
+.addTodoDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -25px;
+}
+
+.addTodoDiv button, .modal-footer #addLi, .modal-footer #updLi {
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-size: 18px;
+    background-color: #a670e7;
+    border: none;
+    color: #FCFAFE;
+    transition: .5s all;
+    outline: 0;
+}
+
+.addTodoDiv button:hover, .modal-footer #addLi:hover, .modal-footer #updLi:hover {
+    background-color: #934fe7;
+}
+
+.todoList {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    list-style: none;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 2px 20px;
+    border-radius: 25px;
+    transition: .5s all;
+}
+
+.todoContent p {
+    margin-bottom: 0;
+    word-break: break-all;
+}
+
+.todoItemDiv {
+    padding-left: 20px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editDelBtns {
+    display: flex;
+    gap: 15px;
+}
+
+.editDelBtns div {
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    transition: .5s all;
+}
+
+.editDelBtns div:hover {
+    background-color: #b38ae5;
+    color: rgb(233, 233, 233);
+}
+
+.editDelBtns .delBtn:hover {
+    background-color: #e65151;
+}
+
+.todo-item:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.todo-item:hover .fa-circle {
+    border-radius: 50%;
+    background-color: #AF7EEB;
+    border-color: #AF7EEB;
+}
+
+.delTodoDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -22px;
+}
+
+.delTodoDiv button {
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-size: 18px;
+    background-color: #e65151;
+    border: none;
+    color: #FCFAFE;
+    transition: .5s all;
+    display: none;
+}
+
+.delTodoDiv button:hover {
+    background-color: #e51c1c;
+}
+
+@media (max-width: 500px) {
+    .todoList {
+        padding: 0 25px;
+    }
+
+    .todo-item {
+        padding: 10px 10px;
+    }
+    .editDelBtns {
+        gap: 5px;
+    }
+}
+
+@media (max-width: 367px) {
+    .todoList {
+        padding: 0 15px;
+    }
+}
