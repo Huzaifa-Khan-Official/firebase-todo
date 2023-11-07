@@ -30,12 +30,12 @@ let successPara = document.querySelector("#successPara"); // get success paragra
 const userUid = localStorage.getItem("userUid");
 const ids = [];
 
-
+let dataSize;
 
 const getTodos = () => {
     onSnapshot(collection(db, userUid), (data) => {
         data.docChanges().forEach((todo) => {
-            console.log(data.size);
+            console.log("checking");
             if (data.size) {
                 delAll.style.display = "block";
             } else {
@@ -48,7 +48,6 @@ const getTodos = () => {
                 }
             } else if (todo.type === "added") {
                 ids.push(todo.doc.id)
-                // delAll.style.display = "block";
                 todoList.innerHTML += `
                 <li class="todo-item" id="${todo.doc.id}">
                     <div class="listStyle">
@@ -98,44 +97,37 @@ inputLi.addEventListener("keypress", (e) => {
 
 delAll.addEventListener("click", async () => {
     getul.innerHTML = "";
-    delAll.style.display = "none";
     for (var i = 0; i < ids.length; i++) {
         await deleteDoc(doc(db, userUid, ids[i]));
     }
+
 })
 
-let deletedTodos = [];
 async function delLi(id) {
     await deleteDoc(doc(db, userUid, id));
-
-    // onSnapshot(collection(db, userUid), (data) => {
-    //     data.docChanges().forEach((todo) => {
-    //         deletedTodos.push(todo.doc.id)
-    //         if (deletedTodos) {
-    //             delAll.style.display = "block";
-    //         } else {
-    //             delAll.style.display = "none";
-    //         }
-    //     })
-    // });
 }
 
+let updateLi;
+let updateLiId;
 
 async function editLi(e, id) {
     let previousTodo = e.parentNode.parentNode.childNodes[1].childNodes[0].textContent;
     updLiInp.value = previousTodo;
 
-    updLiInp.addEventListener("keypress", (event) => {
-        if (event.key == "Enter") {
-            updLiFoo(e, id)
-        }
-    })
+    updateLi = e;
+    updateLiId = id
 
-    updLiBtn.addEventListener("click", () => {
-        updLiFoo(e, id)
-    })
 }
 
+updLiInp.addEventListener("keypress", (event) => {
+    if (event.key == "Enter") {
+        updLiFoo(updateLi, updateLiId)
+    }
+})
+
+updLiBtn.addEventListener("click", () => {
+    updLiFoo(updateLi, updateLiId)
+})
 async function updLiFoo(e, id) {
     $('#updModal').modal('hide');
     let updTodo = updLiInp.value;
