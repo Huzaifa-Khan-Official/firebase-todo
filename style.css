@@ -30,9 +30,7 @@
     background-color: #0171d3 !important;
 }
 
-#errorPara {
-    color: red;
-}
+
 
 #successPara {
     color: green;
@@ -208,6 +206,12 @@ nav button {
 
 #logout:hover {
     cursor: pointer;
+}
+
+#errorPara, #upderrorPara {
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 @media (max-width: 500px) {

@@ -26,16 +26,14 @@ const inputLi = document.getElementById("inp");
 const updLiInp = document.getElementById("updInp");
 let todoList = document.querySelector(".todoList");
 let errorPara = document.querySelector("#errorPara"); // get error paragraph
+let upderrorPara = document.querySelector("#upderrorPara"); // get error paragraph
 let successPara = document.querySelector("#successPara"); // get success paragraph
 const userUid = localStorage.getItem("userUid");
 const ids = [];
 
-let dataSize;
-
 const getTodos = () => {
     onSnapshot(collection(db, userUid), (data) => {
         data.docChanges().forEach((todo) => {
-            console.log("checking");
             if (data.size) {
                 delAll.style.display = "block";
             } else {
@@ -72,15 +70,23 @@ const getTodos = () => {
 getTodos()
 
 addLi.addEventListener("click", async () => {
-    $('#addTodoModal').modal('hide');
     try {
         const inputLi = document.getElementById("inp");
         const todo = inputLi.value
-        const date = new Date();
-        const docRef = await addDoc(collection(db, userUid), {
-            todo: todo,
-            data: date.toLocaleString()
-        });
+        if (todo == "") {
+            errorPara.innerText = "Please fill input field!";
+            setTimeout(() => {
+                errorPara.innerHTML = "";
+            }, 3000);
+        } else {
+            $('#addTodoModal').modal('hide');
+            const date = new Date();
+            const docRef = await addDoc(collection(db, userUid), {
+                todo: todo,
+                data: date.toLocaleString()
+            });
+
+        }
     } catch (e) {
         console.error("Error adding document: ", e);
     }
@@ -128,14 +134,22 @@ updLiInp.addEventListener("keypress", (event) => {
 updLiBtn.addEventListener("click", () => {
     updLiFoo(updateLi, updateLiId)
 })
+
 async function updLiFoo(e, id) {
-    $('#updModal').modal('hide');
     let updTodo = updLiInp.value;
-    updLiInp.value = updTodo;
-    e.parentNode.parentNode.childNodes[1].childNodes[0].textContent = updTodo;
-    await updateDoc(doc(db, userUid, id), {
-        todo: updTodo
-    })
+    if (updTodo == "") {
+        upderrorPara.innerText = "Can not update empty field!";
+        setTimeout(() => {
+            upderrorPara.innerHTML = "";
+        }, 3000);
+    } else {
+        $('#updModal').modal('hide');
+        updLiInp.value = updTodo;
+        e.parentNode.parentNode.childNodes[1].childNodes[0].textContent = updTodo;
+        await updateDoc(doc(db, userUid, id), {
+            todo: updTodo
+        })
+    }
 }
 
 window.delLi = delLi;
