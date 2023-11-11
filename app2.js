@@ -1,5 +1,17 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-import { getFirestore, collection, addDoc, doc, onSnapshot, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    doc,
+    onSnapshot,
+    deleteDoc,
+    updateDoc 
+} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDKbcJ3CVh0M6_MnGQjF2Iw_LmskUabrdE",
@@ -17,6 +29,14 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
+const auth = getAuth();
+
+onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        localStorage.removeItem("userUid")
+        location.href = "../signup/signup.html";
+    }
+});
 
 const getul = document.querySelector(".todoList")
 const addLi = document.getElementById("addLi");
@@ -151,6 +171,14 @@ async function updLiFoo(e, id) {
         })
     }
 }
+
+const logout = document.querySelector("#logout");
+
+logout.addEventListener("click", () => {
+    auth.signOut().then(() => {
+        location.href = "../signup/signup.html";
+    })
+})
 
 window.delLi = delLi;
 window.editLi = editLi;

@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 5px 10px;
+    background-color: #E3E9FF;
+}
+
+.containerDiv {
+    margin: 100px auto 50px;
+    width: 90%;
+    max-width: 600px;
+}
+
+nav {
+    width: 600px;
+}
+
+.navbar {
+    background-color: #AF7EEB !important;
+    color: #FFFDFF !important;
+    width: 100%;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-item:hover .nav-link {
+    color: white;
+}
+
+#line2 {
+    background-color: white;
+    height: 3px;
+    transition: width .5s;
+    width: 0px;
+}
+
+.nav-item:hover #line2 {
+    display: block;
+    width: 50px;
+}
+#line1 {
+    background-color: white;
+    height: 3px;
+    transition: width .5s;
+    width: 0px;
+}
+
+.nav-item:hover #line1 {
+    display: block;
+    width: 35px;
+}
+
+.navHead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+.nav-heading {
+    width: 510px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav button {
+    width: 57px;
+    color: #F2E9FB !important;
+}
+
+.card {
+    margin-top: 35px;
+    min-height: 100px;
+}
+
+.acntSettHeading {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.detailsDiv {
+    padding: 0 50px;
+}
+
+@media (max-width: 500px) {
+    .detailsDiv {
+        padding: 0 25px;
+    }
+}
+
+@media (max-width: 367px) {
+    .detailsDiv {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 290px) {
+    .navHead {
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+    .nav-heading {
+        justify-content: start;
+    }
+}
