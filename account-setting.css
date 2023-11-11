@@ -78,7 +78,7 @@ nav button {
 
 .card {
     margin-top: 35px;
-    min-height: 100px;
+    padding-bottom: 20px;
 }
 
 .acntSettHeading {
@@ -89,6 +89,23 @@ nav button {
 .detailsDiv {
     padding: 0 50px;
 }
+
+.updBtn button {
+    background-color: #0171d3 !important;
+}
+
+#errorPara {
+    color: red;
+}
+
+#successPara {
+    color: green;
+}
+
+/* .btnsDiv {
+    display: flex;
+    justify-content: space-between;
+} */
 
 @media (max-width: 500px) {
     .detailsDiv {

@@ -55,10 +55,29 @@
                     <label class="form-label">Full Name:</label>
                     <input type="text" class="form-control" id="uptName">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Email Address:</label>
+                    <input type="text" class="form-control mb-1" disabled id="uptEmail">
+                    <p>Note: you can not update email address.</p>
+                </div>
+                <p id="errorPara"></p>
+                <p id="successPara"></p>
+                <div class="btnsDiv">
+                    <div class="updBtn">
+                        <button class="btn btn-primary" id="updBtn">Update</button>
+                    </div>
+                    <hr>
+                    <div class="delBtn">
+                        <h6>Danger Zone</h6>
+                        <p>If you delete your account you will lose all your data.</p>
+                        <button class="btn btn-danger" id="delBtn">Delete Account</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <script type="module" src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

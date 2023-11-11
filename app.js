@@ -40,6 +40,10 @@ const usernameDiv = document.querySelector('#uptName');
 // get useremailDiv
 const useremailDiv = document.querySelector('#uptEmail');
 
+if (!localStorage.getItem("userUid")) {
+    location.href = "../signup/signup.html"
+}
+
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         // give reference of the User
@@ -49,15 +53,15 @@ onAuthStateChanged(auth, async (user) => {
         // get user all data
         const usersData = userSnap.data()
         let userName = usersData.sname;
-        let nameFirstLetter = userName.slice(0,1).toUpperCase();
+        let nameFirstLetter = userName.slice(0, 1).toUpperCase();
         let nameRemainLetters = userName.slice(1).toLowerCase();
         userName = nameFirstLetter + nameRemainLetters
 
         usersName = userName; // get the user name
-        // usersEmail = usersData.semail; // get the user name 
+        usersEmail = usersData.semail; // get the user name 
 
         usernameDiv.value = usersName
-        // useremailDiv.value = usersEmail
+        useremailDiv.value = usersEmail
     } else {
         localStorage.removeItem("userUid")
         location.href = "../signup/signup.html";
@@ -84,67 +88,79 @@ const delBtn = document.querySelector('#delBtn');
 
 
 
-// updBtn.addEventListener("click", async () => {
-//     if (usernameDiv.value == "") {
-//         errorPara.innerText = "Please fill the name field";
-//         setTimeout(() => {
-//             errorPara.innerHTML = "";
-//         }, 3000);
-//     } else if (usernameDiv.value == usersName) {
-//         errorPara.innerText = "Can not update previous name";
-//         setTimeout(() => {
-//             errorPara.innerHTML = "";
-//         }, 3000);
-//     } else {
-//         const upedName = usernameDiv.value;
-//         try {
-//             await updateDoc(usersRef, {
-//                 sname: upedName
-//             });
-//             successPara.innerText = "Successfully Updated!";
-//             setTimeout(() => {
-//                 successPara.innerHTML = "";
-//             }, 3000);
-//         } catch (error) {
-//             const errorCode = error.code;
-//             const errorMessage = errorCode.slice(5).toUpperCase();
-//             const errMessage = errorMessage.replace(/-/g, " ")
-//             errorPara.innerText = errMessage;
-//             setTimeout(() => {
-//                 errorPara.innerHTML = "";
-//             }, 3000);
-//         }
+updBtn.addEventListener("click", async () => {
+    if (usernameDiv.value == "") {
+        errorPara.innerText = "Please fill the name field";
+        setTimeout(() => {
+            errorPara.innerHTML = "";
+        }, 3000);
+    } else if (usernameDiv.value == usersName) {
+        errorPara.innerText = "Can not update previous name";
+        setTimeout(() => {
+            errorPara.innerHTML = "";
+        }, 3000);
+    } else {
+        const upedName = usernameDiv.value;
+        try {
+            await updateDoc(usersRef, {
+                sname: upedName
+            });
+            successPara.innerText = "Successfully Updated!";
+            setTimeout(() => {
+                successPara.innerHTML = "";
+            }, 3000);
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = errorCode.slice(5).toUpperCase();
+            const errMessage = errorMessage.replace(/-/g, " ")
+            errorPara.innerText = errMessage;
+            setTimeout(() => {
+                errorPara.innerHTML = "";
+            }, 3000);
+        }
+    }
+});
 
-//     }
-// });
 
 
-// delBtn.addEventListener("click", async () => {
-//     try {
-//         await deleteDoc(doc(db, "users", localStorage.getItem("userUid"))); // deleted data of user from firestore.
-//         deleteUser(auth.currentUser).then(() => {
-//             successPara.innerText = "Successfully deleted your account!";
-//             setTimeout(() => {
-//                 successPara.innerHTML = "";
-//             }, 3000);
-//             localStorage.removeItem("userUid")
-//             location.href = "../signup/signup.html"
-//         }).catch((error) => {
-//             const errorCode = error.code;
-//             const errorMessage = errorCode.slice(5).toUpperCase();
-//             const errMessage = errorMessage.replace(/-/g, " ")
-//             errorPara.innerText = errMessage;
-//             setTimeout(() => {
-//                 errorPara.innerHTML = "";
-//             }, 3000);
-//         });
-//     } catch (error) {
-//         const errorCode = error.code;
-//         const errorMessage = errorCode.slice(5).toUpperCase();
-//         const errMessage = errorMessage.replace(/-/g, " ")
-//         errorPara.innerText = errMessage;
-//         setTimeout(() => {
-//             errorPara.innerHTML = "";
-//         }, 3000);
-//     }
-// })
+delBtn.addEventListener("click", () => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                await deleteDoc(doc(db, "users", localStorage.getItem("userUid"))); // deleted data of user from firestore.
+                deleteUser(auth.currentUser).then( async () => {
+                    localStorage.removeItem("userUid")
+                    for (var i = 0; i < ids.length; i++) {
+                        await deleteDoc(doc(db, userUid, ids[i]));
+                    }
+                    location.href = "../signup/signup.html"
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = errorCode.slice(5).toUpperCase();
+                    const errMessage = errorMessage.replace(/-/g, " ")
+                    errorPara.innerText = errMessage;
+                    setTimeout(() => {
+                        errorPara.innerHTML = "";
+                    }, 3000);
+                });
+            } catch (error) {
+                const errorCode = error.code;
+                const errorMessage = errorCode.slice(5).toUpperCase();
+                const errMessage = errorMessage.replace(/-/g, " ")
+                errorPara.innerText = errMessage;
+                setTimeout(() => {
+                    errorPara.innerHTML = "";
+                }, 3000);
+            }
+
+        }
+    });
+})
