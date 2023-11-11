@@ -48,11 +48,15 @@ onAuthStateChanged(auth, async (user) => {
         const userSnap = await getDoc(usersRef);
         // get user all data
         const usersData = userSnap.data()
+        let userName = usersData.sname;
+        let nameFirstLetter = userName.slice(0,1).toUpperCase();
+        let nameRemainLetters = userName.slice(1).toLowerCase();
+        userName = nameFirstLetter + nameRemainLetters
 
-        // usersName = usersData.sname; // get the user name
+        usersName = userName; // get the user name
         // usersEmail = usersData.semail; // get the user name 
 
-        // usernameDiv.value = usersName
+        usernameDiv.value = usersName
         // useremailDiv.value = usersEmail
     } else {
         localStorage.removeItem("userUid")
