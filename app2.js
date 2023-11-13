@@ -31,6 +31,10 @@ const db = getFirestore(app);
 
 const auth = getAuth();
 
+if (!localStorage.getItem("userUid")) {
+    location.href = "../signup/signup.html";
+}
+
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
         localStorage.removeItem("userUid")
