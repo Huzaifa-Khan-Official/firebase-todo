@@ -1,4 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
 
 import {
     getAuth,
@@ -121,6 +123,15 @@ updBtn.addEventListener("click", async () => {
     }
 });
 
+const ids = [];
+
+const getTodos = () => {
+    onSnapshot(collection(db, userUid), (data) => {
+        data.docChanges().forEach((todo) => {
+            ids.push(todo.doc.id)
+        })
+    })
+}
 
 
 delBtn.addEventListener("click", () => {
@@ -136,10 +147,10 @@ delBtn.addEventListener("click", () => {
         if (result.isConfirmed) {
             try {
                 await deleteDoc(doc(db, "users", localStorage.getItem("userUid"))); // deleted data of user from firestore.
-                deleteUser(auth.currentUser).then( async () => {
+                deleteUser(auth.currentUser).then(async () => {
                     localStorage.removeItem("userUid")
                     for (var i = 0; i < ids.length; i++) {
-                        await deleteDoc(doc(db, userUid, ids[i]));
+                        await deleteDoc(doc(db, localStorage.getItem("userUid"), ids[i]));
                     }
                     location.href = "../signup/signup.html"
                 }).catch((error) => {
