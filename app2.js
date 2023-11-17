@@ -41,7 +41,6 @@ onAuthStateChanged(auth, async (user) => {
         location.href = "../signup/signup.html";
     }
 });
-
 const getul = document.querySelector(".todoList")
 const addLi = document.getElementById("addLi");
 const updLiBtn = document.getElementById("updLi");
@@ -51,7 +50,6 @@ const updLiInp = document.getElementById("updInp");
 let todoList = document.querySelector(".todoList");
 let errorPara = document.querySelector("#errorPara"); // get error paragraph
 let upderrorPara = document.querySelector("#upderrorPara"); // get error paragraph
-let successPara = document.querySelector("#successPara"); // get success paragraph
 const userUid = localStorage.getItem("userUid");
 const ids = [];
 

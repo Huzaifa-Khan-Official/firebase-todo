@@ -13,7 +13,9 @@ import {
     doc,
     getDoc,
     updateDoc,
-    deleteDoc
+    deleteDoc,
+    onSnapshot,
+    collection
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -29,7 +31,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
-
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
@@ -126,12 +127,15 @@ updBtn.addEventListener("click", async () => {
 const ids = [];
 
 const getTodos = () => {
-    onSnapshot(collection(db, userUid), (data) => {
+    onSnapshot(collection(db, localStorage.getItem("userUid")), (data) => {
         data.docChanges().forEach((todo) => {
             ids.push(todo.doc.id)
         })
     })
 }
+
+getTodos()
+
 
 
 delBtn.addEventListener("click", () => {
@@ -147,21 +151,23 @@ delBtn.addEventListener("click", () => {
         if (result.isConfirmed) {
             try {
                 await deleteDoc(doc(db, "users", localStorage.getItem("userUid"))); // deleted data of user from firestore.
-                deleteUser(auth.currentUser).then(async () => {
-                    localStorage.removeItem("userUid")
-                    for (var i = 0; i < ids.length; i++) {
-                        await deleteDoc(doc(db, localStorage.getItem("userUid"), ids[i]));
-                    }
-                    location.href = "../signup/signup.html"
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = errorCode.slice(5).toUpperCase();
-                    const errMessage = errorMessage.replace(/-/g, " ")
-                    errorPara.innerText = errMessage;
-                    setTimeout(() => {
-                        errorPara.innerHTML = "";
-                    }, 3000);
-                });
+                for (var i = 0; i < ids.length; i++) {
+                    await deleteDoc(doc(db, localStorage.getItem("userUid"), ids[i]));
+                }
+                onAuthStateChanged(auth, async (currentUser) => {
+                    deleteUser(currentUser).then(async () => {
+                        localStorage.removeItem("userUid")
+                        location.href = "../signup/signup.html"
+                    }).catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = errorCode.slice(5).toUpperCase();
+                        const errMessage = errorMessage.replace(/-/g, " ")
+                        errorPara.innerText = errMessage;
+                        setTimeout(() => {
+                            errorPara.innerHTML = "";
+                        }, 3000);
+                    });
+                })
             } catch (error) {
                 const errorCode = error.code;
                 const errorMessage = errorCode.slice(5).toUpperCase();

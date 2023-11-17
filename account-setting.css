@@ -33,6 +33,10 @@ nav {
     color: white;
 }
 
+#logout:hover {
+    cursor: pointer;
+}
+
 #line2 {
     background-color: white;
     height: 3px;
