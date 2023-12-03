@@ -80,48 +80,48 @@ spassword.addEventListener("keypress", (e) => {
   }
 });
 
-const googleSignInBtn = document.getElementById("googleSignInBtn");
+// const googleSignInBtn = document.getElementById("googleSignInBtn");
 
-googleSignInBtn.addEventListener("click", () => {
-  signInWithPopup(auth, provider)
-    .then(async (result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
+// googleSignInBtn.addEventListener("click", () => {
+//   signInWithPopup(auth, provider)
+//     .then(async (result) => {
+//       const credential = GoogleAuthProvider.credentialFromResult(result);
+//       const token = credential.accessToken;
 
-      const user = result.user;
+//       const user = result.user;
 
-      let userData = {
-        sname: user.displayName,
-        semail: user.email,
-      };
+//       let userData = {
+//         sname: user.displayName,
+//         semail: user.email,
+//       };
 
-      await setDoc(doc(db, "users", user.uid), {
-        // collection name,   unique id of user
-        ...userData, // setting array in a database
-        userid: user.uid, // also user id in the database
-      });
+//       await setDoc(doc(db, "users", user.uid), {
+//         // collection name,   unique id of user
+//         ...userData, // setting array in a database
+//         userid: user.uid, // also user id in the database
+//       });
 
-      localStorage.setItem("userUid", user.uid);
+//       localStorage.setItem("userUid", user.uid);
 
-      location.href = "../index.html";
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+//       location.href = "../index.html";
+//     })
+//     .catch((error) => {
+//       // Handle Errors here.
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       // The email of the user's account used.
+//       const email = error.customData.email;
+//       // The AuthCredential type that was used.
+//         const credential = GoogleAuthProvider.credentialFromError(error);
         
-      if (email) {
-        errorPara.innerText = email;
-        setTimeout(() => {
-          errorPara.innerHTML = "";
-        }, 3000);
-      }
-    });
-});
+//       if (email) {
+//         errorPara.innerText = email;
+//         setTimeout(() => {
+//           errorPara.innerHTML = "";
+//         }, 3000);
+//       }
+//     });
+// });
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
