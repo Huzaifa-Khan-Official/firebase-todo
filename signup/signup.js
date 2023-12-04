@@ -15,13 +15,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyABpF5Aq3pvwYfqSGd4A1LfyhjgKApnFmE",
-  authDomain: "test-project-2b.firebaseapp.com",
-  projectId: "test-project-2b",
-  storageBucket: "test-project-2b.appspot.com",
-  messagingSenderId: "545460196890",
-  appId: "1:545460196890:web:c8718f9b0776412ddaa3a3",
-  measurementId: "G-24X003ETZV",
+  apiKey: "AIzaSyDKbcJ3CVh0M6_MnGQjF2Iw_LmskUabrdE",
+  authDomain: "fir-todo-5ed69.firebaseapp.com",
+  projectId: "fir-todo-5ed69",
+  storageBucket: "fir-todo-5ed69.appspot.com",
+  messagingSenderId: "70260766093",
+  appId: "1:70260766093:web:5ec9b1faef82084c2df9c4"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -80,48 +79,48 @@ spassword.addEventListener("keypress", (e) => {
   }
 });
 
-// const googleSignInBtn = document.getElementById("googleSignInBtn");
+const googleSignInBtn = document.getElementById("googleSignInBtn");
 
-// googleSignInBtn.addEventListener("click", () => {
-//   signInWithPopup(auth, provider)
-//     .then(async (result) => {
-//       const credential = GoogleAuthProvider.credentialFromResult(result);
-//       const token = credential.accessToken;
+googleSignInBtn.addEventListener("click", () => {
+  signInWithPopup(auth, provider)
+    .then(async (result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
 
-//       const user = result.user;
+      const user = result.user;
 
-//       let userData = {
-//         sname: user.displayName,
-//         semail: user.email,
-//       };
+      let userData = {
+        sname: user.displayName,
+        semail: user.email,
+      };
 
-//       await setDoc(doc(db, "users", user.uid), {
-//         // collection name,   unique id of user
-//         ...userData, // setting array in a database
-//         userid: user.uid, // also user id in the database
-//       });
+      await setDoc(doc(db, "users", user.uid), {
+        // collection name,   unique id of user
+        ...userData, // setting array in a database
+        userid: user.uid, // also user id in the database
+      });
 
-//       localStorage.setItem("userUid", user.uid);
+      localStorage.setItem("userUid", user.uid);
 
-//       location.href = "../index.html";
-//     })
-//     .catch((error) => {
-//       // Handle Errors here.
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       // The email of the user's account used.
-//       const email = error.customData.email;
-//       // The AuthCredential type that was used.
-//         const credential = GoogleAuthProvider.credentialFromError(error);
+      location.href = "../index.html";
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
         
-//       if (email) {
-//         errorPara.innerText = email;
-//         setTimeout(() => {
-//           errorPara.innerHTML = "";
-//         }, 3000);
-//       }
-//     });
-// });
+      if (email) {
+        errorPara.innerText = email;
+        setTimeout(() => {
+          errorPara.innerHTML = "";
+        }, 3000);
+      }
+    });
+});
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
